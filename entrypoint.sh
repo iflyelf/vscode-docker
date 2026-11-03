@@ -5,6 +5,8 @@ set -e
 EXTENSIONS_DIR="/root/.local/share/code-server/extensions"
 EXTENSIONS_BACKUP="/opt/extensions-backup"
 CONFIG_FILE="/root/.config/code-server/config.yaml"
+USER_DIR="/root/.local/share/code-server/User"
+LOCALE_FILE="${USER_DIR}/locale.json"
 
 # 如果扩展目录为空或只有 extensions.json，则从备份恢复
 if [ ! -d "$EXTENSIONS_DIR" ] || [ "$(ls -A "$EXTENSIONS_DIR" | wc -l)" -le 1 ]; then
@@ -13,6 +15,16 @@ if [ ! -d "$EXTENSIONS_DIR" ] || [ "$(ls -A "$EXTENSIONS_DIR" | wc -l)" -le 1 ];
         cp -r "$EXTENSIONS_BACKUP"/* "$EXTENSIONS_DIR/" 2>/dev/null || true
         echo "✅ 预装扩展已恢复"
     fi
+fi
+
+# 创建用户目录
+mkdir -p "$USER_DIR"
+
+# 创建 locale.json 文件（如果不存在）
+if [ ! -f "$LOCALE_FILE" ]; then
+    echo "创建 locale.json 文件..."
+    echo '{"locale":"zh-cn"}' > "$LOCALE_FILE"
+    echo "✅ locale.json 已创建（中文界面）"
 fi
 
 # 从环境变量读取配置（提供默认值）
@@ -37,6 +49,7 @@ fi
 echo "✅ 配置文件已生成"
 echo "   端口: ${CODE_SERVER_PORT}"
 echo "   代理: ${CODE_SERVER_PROXY:-未配置}"
+echo "   语言: 中文(简体)"
 
 # 修改启动命令中的端口
 if [ "$1" = "/usr/bin/tini" ] && [ "$2" = "--" ] && [ "$3" = "code-server" ]; then
