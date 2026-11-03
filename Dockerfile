@@ -142,10 +142,10 @@ RUN set -eux && \
 # 安装 nvm 和 Node.js
 ENV NVM_DIR=/root/.nvm \
     NODE_VERSION=lts/*
-RUN set -eux && \
+RUN set -ex && \
     # 安装 nvm
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
-    # 加载 nvm
+    # 加载 nvm（不使用 -u 选项，因为 nvm.sh 使用了未定义的变量）
     . "$NVM_DIR/nvm.sh" && \
     # 安装 Node.js LTS
     nvm install $NODE_VERSION && \
