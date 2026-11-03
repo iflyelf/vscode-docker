@@ -72,7 +72,7 @@ docker run -d \
   -v $(pwd)/config:/root/.config/code-server \
   -v $(pwd)/data:/root/.local/share/code-server \
   -v $(pwd)/workspace:/workspace \
-  -e PASSWORD=ysyh!9Sky \
+  -e PASSWORD=your_password \
   -e TZ=Asia/Shanghai \
   --restart always \
   iflyelf/code-server:latest
@@ -88,7 +88,7 @@ docker run -d \
   -p 8888:8888 \
   -v $(pwd)/config:/root/.config/code-server \
   -v $(pwd)/data:/root/.local/share/code-server \
-  -e PASSWORD=ysyh!9Sky \
+  -e PASSWORD=your_password \
   --restart always \
   swr.cn-east-3.myhuaweicloud.com/iflyelf/code-server:latest
 ```
@@ -101,7 +101,7 @@ docker run -d \
 http://localhost:8888
 ```
 
-默认密码：`ysyh!9Sky`
+默认密码：请在部署时设置
 
 ---
 
@@ -127,7 +127,7 @@ http://localhost:8888
 ```yaml
 bind-addr: 0.0.0.0:8888
 auth: password
-password: ysyh!9Sky
+password: your_password
 cert: false
 ```
 
@@ -283,7 +283,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 ```yaml
 bind-addr: 0.0.0.0:8888
 auth: password
-password: ysyh!9Sky
+password: your_password
 cert: /config/ssl/code-server.crt
 cert-key: /config/ssl/code-server.key
 ```
@@ -338,7 +338,7 @@ server {
 
 ```yaml
 environment:
-  - PASSWORD=ysyh!9Sky
+  - PASSWORD=your_password
   - VSCODE_DEFAULT_WORKSPACE=/workspace/myproject
 volumes:
   - /path/to/your/project:/workspace/myproject
@@ -494,10 +494,12 @@ docker build -t code-server:custom .
 
 访问：`Settings` → `Secrets and variables` → `Actions` → `New repository secret`
 
-| Secret 名称 | 说明 | 值 |
+| Secret 名称 | 说明 | 示例值 |
 |------------|------|-----|
-| `DOCKER_PASSWORD` | Docker Hub 登录密码 | `ysyh!9Sky` |
-| `HUAWEI_SWR_PASSWORD` | 华为云 SWR 登录密码 | `89859da8eda4ca25a0d0e6012c798c479ff11634b41d0b99abb08fead6ec1af6` |
+| `DOCKER_PASSWORD` | Docker Hub 登录密码 | `your_docker_hub_password` |
+| `HUAWEI_SWR_PASSWORD` | 华为云 SWR 登录密码 | `your_huawei_swr_password` |
+
+**注意**：请使用您自己的真实密码替换示例值。
 
 ### 自动构建触发条件
 
