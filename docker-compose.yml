@@ -1,0 +1,47 @@
+services:
+
+  # 服务名
+  code-server:
+    # 模拟一个伪终端
+    tty: true
+    # 打开标准输入, 可以接受外部输入
+    stdin_open: true
+    # 指定容器名称
+    container_name: code-server
+    # 指定为镜像名称或镜像ID
+    image: iflyelf/code-server:latest
+    # 国内推荐改用华为云 SWR:
+    # image: swr.cn-east-3.myhuaweicloud.com/iflyelf/code-server:latest
+    # 覆盖容器启动后默认执行的命令
+    # command: ["code-server", "--bind-addr", "0.0.0.0:8888", "--auth", "password"]
+    # 允许容器中运行一些特权命令
+    privileged: false
+    # 指定容器退出后的重启策略为始终重启
+    restart: always
+    # 数据卷所挂载路径设置
+    volumes:
+      # code-server 配置文件目录
+      - ./config:/root/.config/code-server
+      # code-server 数据目录（扩展、用户设置等）
+      - ./data:/root/.local/share/code-server
+      # 工作区目录（可选，映射你的代码目录）
+      - ./workspace:/workspace
+      # 同步宿主机时区与时间
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+      - /etc/localtime:/etc/localtime:ro
+    # 环境变量
+    environment:
+      TZ: Asia/Shanghai
+      # code-server 密码（也可以在 config.yaml 中配置）
+      PASSWORD: ysyh!9Sky
+      # 可选：设置默认工作目录
+      # VSCODE_DEFAULT_WORKSPACE: /workspace
+    # 端口映射
+    ports:
+      - "8888:8888"
+    # 指定容器的 ulimits 限制值
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
