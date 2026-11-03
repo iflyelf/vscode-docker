@@ -143,8 +143,8 @@ RUN set -eux && \
 ENV NVM_DIR=/root/.nvm \
     NODE_VERSION=lts/*
 RUN set -ex && \
-    # 安装 nvm
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+    # 安装 nvm 最新版本（安装脚本会自动获取最新版本）
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && \
     # 加载 nvm（不使用 -u 选项，因为 nvm.sh 使用了未定义的变量）
     . "$NVM_DIR/nvm.sh" && \
     # 安装 Node.js LTS
@@ -157,8 +157,9 @@ RUN set -ex && \
     # 安装全局包
     npm i -g @opencode/cli --registry=https://registry.npmmirror.com && \
     # 验证安装
-    node --version && \
-    npm --version && \
+    echo "Node.js: $(node --version)" && \
+    echo "npm: $(npm --version)" && \
+    echo "nvm: $(nvm --version)" && \
     opencode --version && \
     # 清理缓存
     npm cache clean --force
