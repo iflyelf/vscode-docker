@@ -7,6 +7,8 @@ EXTENSIONS_BACKUP="/opt/extensions-backup"
 CONFIG_FILE="/root/.config/code-server/config.yaml"
 USER_DIR="/root/.local/share/code-server/User"
 LOCALE_FILE="${USER_DIR}/locale.json"
+MACHINE_DIR="/root/.local/share/code-server/Machine"
+SETTINGS_FILE="${USER_DIR}/settings.json"
 
 # 如果扩展目录为空或只有 extensions.json，则从备份恢复
 if [ ! -d "$EXTENSIONS_DIR" ] || [ "$(ls -A "$EXTENSIONS_DIR" | wc -l)" -le 1 ]; then
@@ -17,21 +19,46 @@ if [ ! -d "$EXTENSIONS_DIR" ] || [ "$(ls -A "$EXTENSIONS_DIR" | wc -l)" -le 1 ];
     fi
 fi
 
-# 创建用户目录
-mkdir -p "$USER_DIR"
+# 创建必要目录
+mkdir -p "$USER_DIR" "$MACHINE_DIR"
 
-# 创建 locale.json 文件（如果不存在）
-if [ ! -f "$LOCALE_FILE" ]; then
-    echo "创建 locale.json 文件..."
-    echo '{"locale":"zh-cn"}' > "$LOCALE_FILE"
-    echo "✅ locale.json 已创建（中文界面）"
+# 创建 locale.json 文件（强制设置为中文）
+echo "配置中文界面..."
+echo '{"locale":"zh-cn"}' > "$LOCALE_FILE"
+echo "✅ locale.json 已创建"
+
+# 创建或更新 settings.json，确保包含 locale 配置
+if [ ! -f "$SETTINGS_FILE" ]; then
+    echo "创建 settings.json..."
+    cat > "$SETTINGS_FILE" << 'SETTINGS_EOF'
+{
+    "locale": "zh-cn",
+    "workbench.colorTheme": "Default Dark+",
+    "editor.fontSize": 14,
+    "editor.tabSize": 4
+}
+SETTINGS_EOF
+else
+    # 如果 settings.json 存在，确保包含 locale 配置
+    if ! grep -q '"locale"' "$SETTINGS_FILE"; then
+        echo "更新 settings.json 添加 locale 配置..."
+        # 在第一个 { 后面插入 locale 配置
+        sed -i '1 a\    "locale": "zh-cn",' "$SETTINGS_FILE"
+    fi
 fi
+echo "✅ settings.json 已配置"
+
+# 清除可能导致语言不生效的缓存
+echo "清除语言缓存..."
+rm -rf /root/.local/share/code-server/CachedExtensionVSIXs/* 2>/dev/null || true
+rm -rf /root/.local/share/code-server/logs/* 2>/dev/null || true
+echo "✅ 缓存已清除"
 
 # 从环境变量读取配置（提供默认值）
 CODE_SERVER_PORT="${CODE_SERVER_PORT:-8888}"
 CODE_SERVER_PROXY="${CODE_SERVER_PROXY:-}"
 
-# 生成配置文件（如果不存在或需要更新）
+# 生成配置文件
 echo "生成 code-server 配置文件..."
 cat > "$CONFIG_FILE" << EOF
 bind-addr: 0.0.0.0:${CODE_SERVER_PORT}
@@ -46,10 +73,11 @@ if [ -n "$CODE_SERVER_PROXY" ]; then
     echo "✅ 已配置代理: ${CODE_SERVER_PROXY}"
 fi
 
-echo "✅ 配置文件已生成"
+echo "✅ 配置完成"
 echo "   端口: ${CODE_SERVER_PORT}"
 echo "   代理: ${CODE_SERVER_PROXY:-未配置}"
-echo "   语言: 中文(简体)"
+echo "   语言: 中文(简体) - 自动配置"
+echo "   扩展: 已恢复预装扩展"
 
 # 修改启动命令中的端口
 if [ "$1" = "/usr/bin/tini" ] && [ "$2" = "--" ] && [ "$3" = "code-server" ]; then
