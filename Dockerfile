@@ -134,7 +134,14 @@ RUN set -eux && \
     # YAML 语言支持
     code-server --install-extension redhat.vscode-yaml && \
     # 列出已安装的扩展
-    code-server --list-extensions
+    code-server --list-extensions && \
+    # 备份扩展目录（用于首次启动时恢复）
+    mkdir -p /opt/extensions-backup && \
+    cp -r /root/.local/share/code-server/extensions/* /opt/extensions-backup/
+
+# 复制启动脚本
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # 设置 PATH
 ENV PATH="/opt/code-server/bin:${PATH}"
@@ -149,8 +156,8 @@ WORKDIR /root
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:8888/ || exit 1
 
-# 使用 tini 作为 init
-ENTRYPOINT ["/usr/bin/tini", "--"]
+# 使用自定义 entrypoint（包含扩展恢复逻辑）
+ENTRYPOINT ["/entrypoint.sh"]
 
 # 启动 code-server
-CMD ["code-server", "--bind-addr", "0.0.0.0:8888", "--auth", "password"]
+CMD ["/usr/bin/tini", "--", "code-server", "--bind-addr", "0.0.0.0:8888", "--auth", "password"]
