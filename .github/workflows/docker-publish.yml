@@ -179,11 +179,7 @@ jobs:
             exit 0
           fi
           
-          git commit -m "chore: 更新 code-server 版本到 v${VERSION}
-
-- 自动更新 Dockerfile 版本号
-- 自动更新 README.md 版本信息
-- 由 GitHub Actions 自动提交" || exit 0
+          git commit -m "chore: 更新 code-server 版本到 v${VERSION}" || exit 0
           
           git push
           echo "✅ 版本更新已提交"
