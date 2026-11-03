@@ -10,10 +10,12 @@ LOCALE_FILE="${USER_DIR}/locale.json"
 MACHINE_DIR="/root/.local/share/code-server/Machine"
 SETTINGS_FILE="${USER_DIR}/settings.json"
 
-# 如果扩展目录为空或只有 extensions.json，则从备份恢复
-if [ ! -d "$EXTENSIONS_DIR" ] || [ "$(ls -A "$EXTENSIONS_DIR" | wc -l)" -le 1 ]; then
-    echo "检测到扩展目录为空，正在恢复预装扩展..."
+# 如果扩展目录为空或扩展数量少于5个，则从备份恢复
+EXTENSION_COUNT=$(ls -A "$EXTENSIONS_DIR" 2>/dev/null | grep -v "extensions.json" | wc -l)
+if [ ! -d "$EXTENSIONS_DIR" ] || [ "$EXTENSION_COUNT" -lt 5 ]; then
+    echo "检测到扩展目录为空或扩展不完整（当前: ${EXTENSION_COUNT} 个），正在恢复预装扩展..."
     if [ -d "$EXTENSIONS_BACKUP" ]; then
+        mkdir -p "$EXTENSIONS_DIR"
         cp -r "$EXTENSIONS_BACKUP"/* "$EXTENSIONS_DIR/" 2>/dev/null || true
         echo "✅ 预装扩展已恢复"
     fi
