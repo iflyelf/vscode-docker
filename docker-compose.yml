@@ -14,8 +14,14 @@ services:
     # image: swr.cn-east-3.myhuaweicloud.com/iflyelf/code-server:latest
     # 覆盖容器启动后默认执行的命令
     # command: ["code-server", "--bind-addr", "0.0.0.0:8888", "--auth", "password"]
+    # 使用 host 网络模式（直接使用宿主机网络）
+    network_mode: "host"
+    # 宿主机共享进程命名空间
+    pid: host
+    # 使用系统的 IPC 命名空间
+    ipc: host
     # 允许容器中运行一些特权命令
-    privileged: false
+    privileged: true
     # 指定容器退出后的重启策略为始终重启
     restart: always
     # 数据卷所挂载路径设置
@@ -36,9 +42,10 @@ services:
       PASSWORD: ysyh!9Sky
       # 可选：设置默认工作目录
       # VSCODE_DEFAULT_WORKSPACE: /workspace
-    # 端口映射
-    ports:
-      - "8888:8888"
+    # 注意：使用 host 网络模式时，ports 配置会被忽略
+    # 容器将直接使用宿主机的 8888 端口
+    # ports:
+    #   - "8888:8888"
     # 指定容器的 ulimits 限制值
     ulimits:
       nproc: 65535
