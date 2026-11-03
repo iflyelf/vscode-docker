@@ -115,6 +115,27 @@ RUN set -eux && \
     # 验证安装
     code-server --version
 
+# 安装常用扩展
+RUN set -eux && \
+    # 中文语言包（必须第一个安装）
+    code-server --install-extension MS-CEINTL.vscode-language-pack-zh-hans && \
+    # GitLens - Git 增强工具
+    code-server --install-extension eamodio.gitlens && \
+    # Prettier - 代码格式化工具
+    code-server --install-extension esbenp.prettier-vscode && \
+    # ESLint - JavaScript/TypeScript 代码检查
+    code-server --install-extension dbaeumer.vscode-eslint && \
+    # Docker 支持
+    code-server --install-extension ms-azuretools.vscode-docker && \
+    # Go 语言支持
+    code-server --install-extension golang.go && \
+    # Python 语言支持
+    code-server --install-extension ms-python.python && \
+    # YAML 语言支持
+    code-server --install-extension redhat.vscode-yaml && \
+    # 列出已安装的扩展
+    code-server --list-extensions
+
 # 设置 PATH
 ENV PATH="/opt/code-server/bin:${PATH}"
 
