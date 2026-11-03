@@ -1,0 +1,91 @@
+{
+    "locale": "zh-cn",
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.startupEditor": "none",
+    "window.restoreWindows": "none",
+    "editor.minimap.enabled": false,
+    "editor.stickyScroll.enabled": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.smoothScrolling": true,
+    "editor.mouseWheelZoom": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.inlayHints.enabled": "on",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "diffEditor.renderSideBySide": true,
+    "terminal.integrated.gpuAcceleration": "on",
+    "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.env.linux": {
+      "http_proxy": "${HTTP_PROXY}",
+      "https_proxy": "${HTTPS_PROXY}",
+      "all_proxy": "${ALL_PROXY}",
+      "no_proxy": "localhost,127.0.0.1,*.local"
+    },
+    "files.autoSave": "onFocusChange",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "search.followSymlinks": false,
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true
+    },
+    "search.useIgnoreFilesByDefault": true,
+    "explorer.excludeGitIgnore": false,
+    "files.exclude": {
+      "**/.turbo": true,
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true
+    },
+    "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
+      "**/node_modules/**": true,
+      "**/dist/**": true,
+      "**/build/**": true
+    },
+    "typescript.tsserver.maxTsServerMemory": 4096,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "eslint.useFlatConfig": true,
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "all",
+    "prettier.printWidth": 100,
+    "git.enabled": true,
+    "git.autoRepositoryDetection": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.pruneOnFetch": true,
+    "scm.defaultViewMode": "tree",
+    "telemetry.telemetryLevel": "off",
+    "workbench.enableExperiments": false,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4",
+    "go.toolsManagement.autoUpdate": true,
+    "workbench.editorAssociations": {
+      "*.copilotmd": "vscode.markdown.preview.editor",
+      "*.xlsx": "default"
+    },
+    "editor.wordWrap": "on",
+    "editor.wrappingIndent": "same",
+    "notebook.output.wordWrap": true,
+    "diffEditor.wordWrap": "on",
+    "chat.editor.wordWrap": "on",
+    "editor.wrapOnEscapedLineFeeds": true,
+    "workbench.editor.wrapTabs": true,
+    "files.autoGuessEncoding": true
+}

@@ -46,6 +46,12 @@ services:
       # CODE_SERVER_PROXY: your-domain.com:443
       # 可选：设置默认工作目录
       # VSCODE_DEFAULT_WORKSPACE: /workspace
+      # 可选：配置网络代理（会自动应用到终端和 settings.json）
+      # HTTP_PROXY: http://proxy.example.com:8080
+      # HTTPS_PROXY: http://proxy.example.com:8080
+      # ALL_PROXY: socks5h://proxy.example.com:1080
+      # 强制更新 settings.json（首次启动后设为 false）
+      # FORCE_UPDATE_SETTINGS: "true"
     # 注意：使用 host 网络模式时，ports 配置会被忽略
     # 容器将直接使用宿主机的 8888 端口
     # ports:

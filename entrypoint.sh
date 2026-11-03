@@ -29,26 +29,34 @@ echo "配置中文界面..."
 echo '{"locale":"zh-cn"}' > "$LOCALE_FILE"
 echo "✅ locale.json 已创建"
 
-# 创建或更新 settings.json，确保包含 locale 配置
-if [ ! -f "$SETTINGS_FILE" ]; then
-    echo "创建 settings.json..."
-    cat > "$SETTINGS_FILE" << 'SETTINGS_EOF'
-{
-    "locale": "zh-cn",
-    "workbench.colorTheme": "Default Dark+",
-    "editor.fontSize": 14,
-    "editor.tabSize": 4
-}
-SETTINGS_EOF
-else
-    # 如果 settings.json 存在，确保包含 locale 配置
-    if ! grep -q '"locale"' "$SETTINGS_FILE"; then
-        echo "更新 settings.json 添加 locale 配置..."
-        # 在第一个 { 后面插入 locale 配置
-        sed -i '1 a\    "locale": "zh-cn",' "$SETTINGS_FILE"
+# 创建 argv.json（VSCode 的全局语言配置）
+ARGV_FILE="${USER_DIR}/argv.json"
+echo '{"locale":"zh-cn"}' > "$ARGV_FILE"
+echo "✅ argv.json 已创建"
+
+# 使用模板生成 settings.json，支持环境变量替换
+if [ ! -f "$SETTINGS_FILE" ] || [ "${FORCE_UPDATE_SETTINGS:-false}" = "true" ]; then
+    echo "生成 settings.json..."
+    # 从模板复制并替换环境变量
+    HTTP_PROXY="${HTTP_PROXY:-}"
+    HTTPS_PROXY="${HTTPS_PROXY:-}"
+    ALL_PROXY="${ALL_PROXY:-}"
+    
+    # 使用 envsubst 替换环境变量，如果没有则使用 sed
+    if command -v envsubst >/dev/null 2>&1; then
+        export HTTP_PROXY HTTPS_PROXY ALL_PROXY
+        envsubst < /opt/config-template/settings.json > "$SETTINGS_FILE"
+    else
+        # 使用 sed 替换
+        sed -e "s|\${HTTP_PROXY}|${HTTP_PROXY}|g" \
+            -e "s|\${HTTPS_PROXY}|${HTTPS_PROXY}|g" \
+            -e "s|\${ALL_PROXY}|${ALL_PROXY}|g" \
+            /opt/config-template/settings.json > "$SETTINGS_FILE"
     fi
+    echo "✅ settings.json 已生成"
+else
+    echo "✓ settings.json 已存在，跳过"
 fi
-echo "✅ settings.json 已配置"
 
 # 清除可能导致语言不生效的缓存
 echo "清除语言缓存..."
@@ -81,11 +89,12 @@ echo "   代理: ${CODE_SERVER_PROXY:-未配置}"
 echo "   语言: 中文(简体) - 自动配置"
 echo "   扩展: 已恢复预装扩展"
 
-# 修改启动命令中的端口
+# 修改启动命令，使用配置文件而不是命令行参数
 if [ "$1" = "/usr/bin/tini" ] && [ "$2" = "--" ] && [ "$3" = "code-server" ]; then
-    # 如果是默认的启动命令，替换端口参数
+    # 如果是默认的启动命令，使用配置文件启动
     shift 3
-    exec /usr/bin/tini -- code-server --bind-addr "0.0.0.0:${CODE_SERVER_PORT}" --auth password "$@"
+    # 使用 --config 明确指定配置文件，让 code-server 读取所有配置
+    exec /usr/bin/tini -- code-server --config "${CONFIG_FILE}" "$@"
 else
     # 否则执行传入的命令
     exec "$@"

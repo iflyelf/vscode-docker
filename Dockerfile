@@ -139,8 +139,9 @@ RUN set -eux && \
     mkdir -p /opt/extensions-backup && \
     cp -r /root/.local/share/code-server/extensions/* /opt/extensions-backup/
 
-# 复制启动脚本
+# 复制启动脚本和配置模板
 COPY entrypoint.sh /entrypoint.sh
+COPY config-template /opt/config-template
 RUN chmod +x /entrypoint.sh
 
 # 设置 PATH
