@@ -79,7 +79,8 @@ ENV DEBIAN_FRONTEND=$DEBIAN_FRONTEND
 ARG PKG_DEPS="\
     git \
     openssh-client \
-    ca-certificates"
+    ca-certificates \
+    libatomic1"
 ENV PKG_DEPS=$PKG_DEPS
 
 # 安装运行时依赖
