@@ -1,182 +1,110 @@
 {
     // ==================== 语言设置 ====================
-    "locale": "zh-cn", // 界面语言设置为简体中文
+    "locale": "zh-cn",
     
     // ==================== 外观与启动 ====================
-    "workbench.colorTheme": "Light 2026", // 编辑器主题（浅色主题）
-    "workbench.startupEditor": "none", // 启动时不显示欢迎页，加快启动速度
-    "window.restoreWindows": "none", // 启动时不恢复上次窗口，避免大型项目加载卡顿
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.startupEditor": "none",
+    "window.restoreWindows": "none",
 
     // ==================== 编辑体验与性能 ====================
-    "editor.minimap.enabled": false, // 关闭代码缩略图，减少渲染负担
-    "editor.stickyScroll.enabled": true, // 启用粘性滚动，显示当前函数/类名
-    "editor.inlineSuggest.enabled": true, // 启用行内智能补全建议
-    "editor.smoothScrolling": true, // 启用平滑滚动动画
-    "editor.mouseWheelZoom": true, // 允许 Ctrl + 鼠标滚轮缩放字体大小
-    "editor.renderWhitespace": "boundary", // 仅显示边界处的空白字符（空格/制表符）
-    "editor.formatOnSave": true, // 保存文件时自动格式化代码
-    "editor.defaultFormatter": "vscode.typescript-language-features", // 默认格式化器（TS/JS）
+    "editor.minimap.enabled": false,
+    "editor.stickyScroll.enabled": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.smoothScrolling": true,
+    "editor.mouseWheelZoom": true,
+    "editor.renderWhitespace": "boundary",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit", // 保存时自动修复 ESLint 错误（仅手动保存触发）
-      "source.organizeImports": "explicit" // 保存时自动整理导入语句（仅手动保存触发）
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
     },
-    "editor.inlayHints.enabled": "on", // 显示参数名称、返回类型等内联提示
-    "editor.bracketPairColorization.enabled": true, // 启用括号配对着色
-    "editor.guides.bracketPairs": true, // 显示括号配对的连接线
-    "diffEditor.renderSideBySide": true, // 差异对比使用左右并排视图
+    "editor.inlayHints.enabled": "on",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "diffEditor.renderSideBySide": true,
 
     // ==================== 终端配置 ====================
-    "terminal.integrated.gpuAcceleration": "on", // 终端启用 GPU 加速，提升渲染性能
-    "terminal.integrated.shellIntegration.enabled": true, // 启用 Shell 集成功能（命令追踪、智能提示等）
-    "terminal.integrated.env.windows": { // Windows 终端环境变量（代理配置）
-      "http_proxy": "http://10.0.9.60:7890", // HTTP 代理地址
-      "https_proxy": "http://10.0.9.60:7890", // HTTPS 代理地址
-      "all_proxy": "socks5h://10.0.9.60:7890", // SOCKS5 代理（h 表示 DNS 通过代理解析）
-      "socks_proxy": "socks5h://10.0.9.60:7890", // SOCKS5 代理别名（某些工具使用）
-      "no_proxy": "*.visualstudio.com,*.gallerycdn.azure.cn,*.gallery.vsassets.io,*.vscode-sync.trafficmanager.net,*.static.*,*.iflytek.com" // 不走代理的域名列表
-    },
+    "terminal.integrated.gpuAcceleration": "on",
+    "terminal.integrated.shellIntegration.enabled": true,
 
-    // ==================== 文件与搜索（性能优化）====================
-    "files.autoSave": "onFocusChange", // 失去焦点时自动保存文件
-    "files.trimTrailingWhitespace": true, // 保存时自动删除行尾空白字符
-    "files.insertFinalNewline": true, // 保存时在文件末尾自动插入换行符
-    "search.followSymlinks": false, // 搜索时不跟随符号链接，提升搜索速度
-    "search.exclude": { // 搜索时排除的目录（加快搜索速度）
+    // ==================== 文件与搜索 ====================
+    "files.autoSave": "onFocusChange",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "search.followSymlinks": false,
+    "search.exclude": {
       "**/node_modules": true,
       "**/dist": true,
       "**/build": true
     },
-    "search.useIgnoreFilesByDefault": true, // 搜索时默认遵循 .gitignore 规则
-    "explorer.excludeGitIgnore": false, // 资源管理器不遵循 .gitignore（避免 Git 项目被隐藏）
-    "files.exclude": { // 资源管理器中隐藏的文件/目录
+    "search.useIgnoreFilesByDefault": true,
+    "explorer.excludeGitIgnore": false,
+    "files.exclude": {
       "**/.turbo": true,
       "**/node_modules": true,
       "**/dist": true,
       "**/build": true
     },
-    "files.watcherExclude": { // 文件监控排除目录（降低 CPU 占用）
-      "**/.git/objects/**": true, // Git 对象数据库（频繁变更，无需监控）
-      "**/.git/subtree-cache/**": true, // Git 子树缓存
+    "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
       "**/node_modules/**": true,
       "**/dist/**": true,
       "**/build/**": true
     },
 
     // ==================== 语言服务与代码格式化 ====================
-    "typescript.tsserver.maxTsServerMemory": 4096, // TypeScript 语言服务器最大内存（MB），大型项目更稳定
-    "typescript.updateImportsOnFileMove.enabled": "always", // 移动文件时自动更新导入路径
-    "typescript.preferences.importModuleSpecifier": "non-relative", // 优先使用非相对路径（包名）导入
-    "typescript.enablePromptUseWorkspaceTsdk": true, // 提示使用工作区 TypeScript 版本
-    "eslint.useFlatConfig": true, // 使用 ESLint 扁平配置格式（eslint.config.js）
-    "eslint.validate": [ // ESLint 校验的文件类型
+    "typescript.tsserver.maxTsServerMemory": 4096,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "eslint.useFlatConfig": true,
+    "eslint.validate": [
       "javascript",
       "javascriptreact",
       "typescript",
       "typescriptreact"
     ],
-    "prettier.singleQuote": true, // Prettier 使用单引号
-    "prettier.trailingComma": "all", // Prettier 在多行结构末尾添加逗号
-    "prettier.printWidth": 100, // Prettier 每行最大字符数
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "all",
+    "prettier.printWidth": 100,
 
     // ==================== Git 版本控制 ====================
-    "git.enabled": true, // 启用 Git 功能
-    "git.autoRepositoryDetection": true, // 自动检测工作区中的 Git 仓库
-    "git.autofetch": true, // 定期自动从远程仓库拉取更新
-    "git.confirmSync": false, // 同步时不显示确认对话框
-    "git.pruneOnFetch": true, // 拉取时自动清理远程已删除的分支引用
-    "scm.defaultViewMode": "tree", // 源代码管理视图默认使用树状模式
+    "git.enabled": true,
+    "git.autoRepositoryDetection": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.pruneOnFetch": true,
+    "scm.defaultViewMode": "tree",
 
     // ==================== 隐私与遥测 ====================
-    "telemetry.telemetryLevel": "off", // 关闭遥测数据收集
-    "workbench.enableExperiments": false, // 关闭实验性功能
-
-    // ==================== 网络与代理配置 ====================
-    "cursor.general.disableHttp2": true, // 禁用 HTTP/2（某些代理环境下更稳定）
-    "http.proxySupport": "override", // 强制所有 HTTP 请求使用代理设置
-    "http.systemCertificates": true, // 使用系统证书进行 SSL 验证
-    //"http.proxy": "http://10.0.9.60:7890",
-    "http.proxy": "socks5://10.0.9.60:7890", // 全局代理地址（SOCKS5 协议）
-    //"http.proxy": "http://junwang66:default$企信信息化部@cursor-abroad.llmdevops.private:8888",
-    "http.proxyStrictSSL": false, // 不严格验证代理 SSL 证书（代理使用自签证书时）
-    "http.noProxy": [ // 不使用代理的域名列表
-      "*.visualstudio.com,*.gallerycdn.azure.cn,*.gallery.vsassets.io,*.vscode-sync.trafficmanager.net,*.static.*,*.iflytek.com"
-    ],
-    "http.proxyAuthorization": null, // 代理认证信息（格式："Basic base64(user:pass)"）
-
-    // ==================== 远程开发配置 ====================
-    "remote.SSH.httpProxy": "http://10.0.9.60:7890", // 远程 SSH 连接使用的代理
-
-    // ==================== 扩展管理 ====================
-    "extensions.autoUpdate": "on", // 自动更新已安装的扩展
-    // "update.mode": "manual", // 手动更新 VSCode（如需禁用自动更新）
+    "telemetry.telemetryLevel": "off",
+    "workbench.enableExperiments": false,
 
     // ==================== Go 语言开发 ====================
-    "go.toolsManagement.autoUpdate": true, // 自动更新 Go 语言工具链
-
-    // ==================== 配置文件管理 ====================
-    "workbench.settings.applyToAllProfiles": [], // 应用到所有配置文件的设置（空=不强制同步）
-    "terminal.integrated.autoReplies": {
-      // 终端自动回复规则（例如："Terminate batch job (Y/N)?" -> "Y"）
-    },
-
-    // ==================== Kubernetes 工具 ====================
-    "vs-kubernetes": {
-      // Kubernetes 扩展配置（空对象=使用默认配置）
-    },
-
-    // ==================== 远程主机平台识别 ====================
-    "remote.SSH.remotePlatform": {
-      "10.0.9.61": "linux",
-      "10.1.230.115": "linux",
-      "10.0.9.55": "linux",
-      "10.0.88.88": "linux"
-    },
+    "go.toolsManagement.autoUpdate": true,
 
     // ==================== AI 辅助工具配置 ====================
-    "oaicopilot.commitLanguage": "Chinese (Simplified)", // AI 生成 Git 提交信息使用简体中文
-    "oaicopilot.baseUrl": "http://10.0.9.67:8317/v1", // OpenAI 兼容接口地址
-    "oaicopilot.models": [
-      // 可用的 AI 模型列表（空=使用默认模型）
-    ],
-    "claudeCode.preferredLocation": "panel", // Claude Code 界面显示在底部面板
-    "chatgpt.localeOverride": "zh-CN", // ChatGPT 扩展界面语言设为简体中文
-    "files.autoGuessEncoding": true, // 自动检测文件编码（避免中文乱码）
-    "gitlens.ai.model": "vscode", // GitLens AI 功能使用 VSCode 内置 AI 提供方
-    "gitlens.ai.vscode.model": "copilot:gpt-5-mini", // GitLens 使用的具体 AI 模型
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4",
 
     // ==================== 编辑器关联配置 ====================
     "workbench.editorAssociations": {
-      "*.copilotmd": "vscode.markdown.preview.editor", // .copilotmd 文件使用 Markdown 预览编辑器
-      "*.xlsx": "default" // .xlsx 文件使用默认编辑器
+      "*.copilotmd": "vscode.markdown.preview.editor",
+      "*.xlsx": "default"
     },
 
     // ==================== 自动换行配置 ====================
-    "editor.wordWrap": "on", // 编辑器启用自动换行
-    "editor.wrappingIndent": "same", // 换行后的缩进与首行保持一致
-    "notebook.output.wordWrap": true, // Notebook 输出区域启用自动换行
-    "diffEditor.wordWrap": "on", // 差异对比视图启用自动换行
-    "chat.editor.wordWrap": "on", // 聊天编辑器启用自动换行
-    "editor.wrapOnEscapedLineFeeds": true, // 对转义换行符（\n）也进行自动换行
-    "workbench.editor.wrapTabs": true, // 标签页过多时自动换行显示（不使用横向滚动）
+    "editor.wordWrap": "on",
+    "editor.wrappingIndent": "same",
+    "notebook.output.wordWrap": true,
+    "diffEditor.wordWrap": "on",
+    "chat.editor.wordWrap": "on",
+    "editor.wrapOnEscapedLineFeeds": true,
+    "workbench.editor.wrapTabs": true,
 
-    // ==================== Windows 终端配置 ====================
-    "terminal.integrated.profiles.windows": {
-      "PowerShell": {
-        "source": "PowerShell", // 使用系统 PowerShell
-        "icon": "terminal-powershell" // PowerShell 图标
-      },
-      "Command Prompt": {
-        "path": "C:\\WINDOWS\\System32\\cmd.exe", // CMD 可执行文件路径
-        "args": [] // 启动参数（无）
-      },
-      "Git Bash": {
-        "source": "Git Bash", // 使用系统 Git Bash
-        "icon": "terminal-git-bash" // Git Bash 图标
-      }
-    },
-    "terminal.integrated.defaultProfile.windows": "Command Prompt", // Windows 默认终端使用 CMD
-    "remote.SSH.httpsProxy": "", // 远程 SSH HTTPS 代理（空=不使用）
-    "editor.dropIntoEditor.preferences": [
-      // 拖放文件到编辑器的行为偏好设置（空=使用默认行为）
-    ]
-  }
+    // ==================== 文件编码 ====================
+    "files.autoGuessEncoding": true
+}
