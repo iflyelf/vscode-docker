@@ -28,6 +28,13 @@
     // ==================== 终端配置 ====================
     "terminal.integrated.gpuAcceleration": "on",
     "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.env.windows": {
+      "http_proxy": "http://YOUR_PROXY_HOST:PORT",
+      "https_proxy": "http://YOUR_PROXY_HOST:PORT",
+      "all_proxy": "socks5h://YOUR_PROXY_HOST:PORT",
+      "socks_proxy": "socks5h://YOUR_PROXY_HOST:PORT",
+      "no_proxy": "localhost,127.0.0.1"
+    },
 
     // ==================== 文件与搜索 ====================
     "files.autoSave": "onFocusChange",
@@ -83,12 +90,28 @@
     "telemetry.telemetryLevel": "off",
     "workbench.enableExperiments": false,
 
-    // ==================== Go 语言开发 ====================
-    "go.toolsManagement.autoUpdate": true,
+    // ==================== 网络与代理配置（可选）====================
+    "http.proxy": "http://YOUR_PROXY_HOST:PORT",
+    "http.proxyStrictSSL": false,
+    "http.noProxy": [
+      "localhost,127.0.0.1"
+    ],
 
-    // ==================== AI 辅助工具配置 ====================
+    // ==================== 远程开发配置（可选）====================
+    "remote.SSH.remotePlatform": {
+      "YOUR_HOST_IP": "linux"
+    },
+
+    // ==================== AI 辅助工具配置（可选）====================
+    "oaicopilot.commitLanguage": "Chinese (Simplified)",
+    "oaicopilot.baseUrl": "http://YOUR_AI_SERVICE:PORT/v1",
+    "claudeCode.preferredLocation": "panel",
+    "chatgpt.localeOverride": "zh-CN",
     "gitlens.ai.model": "vscode",
     "gitlens.ai.vscode.model": "copilot:gpt-4",
+
+    // ==================== Go 语言开发 ====================
+    "go.toolsManagement.autoUpdate": true,
 
     // ==================== 编辑器关联配置 ====================
     "workbench.editorAssociations": {
