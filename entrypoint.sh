@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# 加载 nvm 环境
+export NVM_DIR="/root/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 # 扩展目录
 EXTENSIONS_DIR="/root/.local/share/code-server/extensions"
 EXTENSIONS_BACKUP="/opt/extensions-backup"

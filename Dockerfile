@@ -139,6 +139,33 @@ RUN set -eux && \
     mkdir -p /opt/extensions-backup && \
     cp -r /root/.local/share/code-server/extensions/* /opt/extensions-backup/
 
+# 安装 nvm 和 Node.js
+ENV NVM_DIR=/root/.nvm \
+    NODE_VERSION=lts/*
+RUN set -eux && \
+    # 安装 nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+    # 加载 nvm
+    . "$NVM_DIR/nvm.sh" && \
+    # 安装 Node.js LTS
+    nvm install $NODE_VERSION && \
+    nvm use $NODE_VERSION && \
+    nvm alias default $NODE_VERSION && \
+    # 配置 npm 镜像源
+    npm config set registry https://registry.npmmirror.com && \
+    npm config set allow-scripts=@opencode/cli --location=user && \
+    # 安装全局包
+    npm i -g @opencode/cli --registry=https://registry.npmmirror.com && \
+    # 验证安装
+    node --version && \
+    npm --version && \
+    opencode --version && \
+    # 清理缓存
+    npm cache clean --force
+
+# 配置环境变量，确保 nvm、node、npm 在 PATH 中
+ENV PATH="$NVM_DIR/versions/node/$(cat $NVM_DIR/alias/default 2>/dev/null || echo 'node')/bin:$PATH"
+
 # 复制启动脚本和配置模板
 COPY entrypoint.sh /entrypoint.sh
 COPY config-template /opt/config-template
