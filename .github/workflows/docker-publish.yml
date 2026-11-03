@@ -19,6 +19,12 @@ concurrency:
   group: publish-${{ github.ref }}
   cancel-in-progress: true
 
+# 权限
+permissions:
+  actions: write
+  contents: write
+  packages: write
+
 env:
   IMAGE_NAME: code-server
   DOCKERHUB_USERNAME: iflyelf
@@ -27,9 +33,21 @@ env:
   HUAWEI_SWR_REGISTRY: swr.cn-east-3.myhuaweicloud.com
 
 jobs:
+  # 清理旧的 workflow runs
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 删除旧的 GitHub workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          repository: ${{ github.repository }}
+          retain_days: 1
+          keep_minimum_runs: 3
+
   # 获取最新版本号
   get-version:
     runs-on: ubuntu-latest
+    needs: cleanup
     outputs:
       version: ${{ steps.get_version.outputs.version }}
       update_readme: ${{ steps.check_version.outputs.update_readme }}
