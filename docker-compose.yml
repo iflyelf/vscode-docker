@@ -40,6 +40,10 @@ services:
       TZ: Asia/Shanghai
       # code-server 密码（也可以在 config.yaml 中配置）
       PASSWORD: ysyh!9Sky
+      # code-server 端口（默认 8888）
+      CODE_SERVER_PORT: 8888
+      # 可选：配置代理域名
+      # CODE_SERVER_PROXY: your-domain.com:443
       # 可选：设置默认工作目录
       # VSCODE_DEFAULT_WORKSPACE: /workspace
     # 注意：使用 host 网络模式时，ports 配置会被忽略

@@ -158,11 +158,40 @@ cert: false
 
 ### 环境变量
 
-| 变量名 | 说明 | 默认值 |
-|--------|------|--------|
-| `PASSWORD` | 登录密码 | - |
-| `TZ` | 时区 | `Asia/Shanghai` |
-| `LANG` | 语言 | `zh_CN.UTF-8` |
+| 变量名 | 说明 | 默认值 | 示例 |
+|--------|------|--------|------|
+| `PASSWORD` | 登录密码 | - | `your_password` |
+| `CODE_SERVER_PORT` | 监听端口 | `8888` | `8080` |
+| `CODE_SERVER_PROXY` | 代理域名（用于反向代理） | - | `code.example.com:443` |
+| `TZ` | 时区 | `Asia/Shanghai` | `UTC` |
+| `LANG` | 语言 | `zh_CN.UTF-8` | `en_US.UTF-8` |
+
+**使用示例**：
+
+```bash
+# 使用自定义端口
+docker run -d \
+  -e PASSWORD=your_password \
+  -e CODE_SERVER_PORT=8080 \
+  -p 8080:8080 \
+  iflyelf/code-server:latest
+
+# 配置反向代理
+docker run -d \
+  -e PASSWORD=your_password \
+  -e CODE_SERVER_PROXY=code.example.com:443 \
+  iflyelf/code-server:latest
+```
+
+**docker-compose.yml 示例**：
+
+```yaml
+environment:
+  PASSWORD: your_password
+  CODE_SERVER_PORT: 8888
+  CODE_SERVER_PROXY: code.example.com:443
+  TZ: Asia/Shanghai
+```
 
 ### 修改密码
 
